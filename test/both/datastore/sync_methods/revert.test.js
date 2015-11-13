@@ -37,4 +37,12 @@ describe('DS#revert', function () {
     post.DSRevert();
     assert.isUndefined(post.newProperty);
   });
+  it('should retain relation to other objects when reverted', function() {
+    var user = User.inject(user10);
+    var comment = user.comments[0];
+    assert.equal(user.comments.length, 3);
+    comment.DSRevert();
+    user.DSRevert();
+    assert.equal(user.comments.length, 3);
+  });
 });
